@@ -1,4 +1,51 @@
 
+const productReview = Vue.component('product-review', {
+    template: `<form class="review-form" @submit.prevent="onSubmit">
+        <p>
+            <label for="name">Name:</label>
+            <input id="name" type="text" v-model="name"/>
+        </p>
+        <p>
+            <label for="review">Review:</label>
+            <textarea id="review" v-model="review"></textarea>
+        </p>
+        <p>
+            <label for="rating">Rating:</label>
+            <select id="rating" v-model.nmber="rating">
+                <option>5</option>
+                <option>4</option>
+                <option>3</option>
+                <option>2</option>
+                <option>1</option>
+            </select>
+        </p>
+        <input type="submit" value="Submit"/>
+    </form>`,
+    data() {
+        return {
+            name: null,
+            review: null,
+            rating: null
+        }
+    },
+    computed: {},
+    methods: {
+        onSubmit(event) {
+            const productReview = {
+                name: this.name,
+                review: this.review,
+                rating: this.rating
+            };
+            this.$emit('review-submitted', productReview);
+            this.name = null;
+            this.review = null;
+            this.rating = null;
+            
+            //emit something here
+        }
+    }
+});
+
 const productComponent = Vue.component('product', {
     // we use props properties to received the props outside the comonent
     props: {
@@ -12,6 +59,9 @@ const productComponent = Vue.component('product', {
             required: true,
             default: false
         }
+    },
+    components: {
+        productReview: productReview
     },
     template: ` <div class="product">
     <div class="product-image">
@@ -39,6 +89,19 @@ const productComponent = Vue.component('product', {
         </ul>
 
     </div>
+
+    <div>
+        <h2>Reviews</h2>
+        <p v-show="reviews.length===0">There are no review yet</p>
+        <ul>
+            <li v-for="review in reviews">
+                <p>{{review.name}}</p>
+                <p>{{review.review}}</p>
+                <p>{{review.rating}}</p>
+            </li>
+        </ul>
+    </div>
+    <product-review @review-submitted="addReview"></product-review>
 </div>`,
     data() {
         return {
@@ -66,6 +129,7 @@ const productComponent = Vue.component('product', {
                     "quanlity": 5
                 },
             ],
+            reviews:[]
         }
     },
     methods: {
@@ -75,6 +139,9 @@ const productComponent = Vue.component('product', {
         },
         updateProduct(index) {
             this.selectedVariant = index;
+        },
+        addReview(reviewData){
+            this.reviews.push(reviewData);
         }
     },
     computed: {
@@ -99,6 +166,8 @@ const productComponent = Vue.component('product', {
         }
     },
 });
+
+
 const app = new Vue({
     el: '#app',
     components: {
