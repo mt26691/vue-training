@@ -6,6 +6,11 @@ const productComponent = Vue.component('product', {
             type: String,
             required: true,
             default: "Test"
+        },
+        prenium: {
+            type: Boolean,
+            required: true,
+            default: false
         }
     },
     template: ` <div class="product">
@@ -21,7 +26,7 @@ const productComponent = Vue.component('product', {
         <p v-if="inventory>10">In stock</p>
         <p v-else-if="inventory <=10 && inventory >0">Near out of stock</p>
         <p v-else>Out of stock</p>
-
+        <p>Shipping: {{shipping}}</p>
         <div v-for="(variant,index) in variants" :key="variant.variantId" class="color-box"
             :style="{backgroundColor:variant.variantColor}" @mouseover="updateProduct(index)">
         </div>
@@ -87,6 +92,12 @@ const productComponent = Vue.component('product', {
         },
         inventory() {
             return this.variants[this.selectedVariant].quanlity;
+        },
+        shipping() {
+            if (this.prenium) {
+                return "free";
+            }
+            return "2.99";
         }
     },
 });
@@ -95,6 +106,9 @@ const app = new Vue({
     components: {
         product: productComponent
     },
+    data: {
+        prenium: true
+    }
 
 });
 
