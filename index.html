@@ -9,7 +9,7 @@
     <div id="app">
         <div class="product">
             <div class="product-image">
-                <!-- v-bind dynamically binds an attribute to an expression -->
+                <!-- v-bind dynamically binds an attribute to an expression  instead of v-bind:src we can just use :src-->
                 <img v-bind:src="image" />
             </div>
             <div class="product-info">
@@ -20,12 +20,18 @@
                 <p v-else-if="inventory <=10 && inventory >0">Near out of stock</p>
                 <p v-else>Out of stock</p>
 
-                <div v-for="variant in variants" :key="variant.variantId">
-                    <p>{{variant.variantColor}}</p>
+                <div v-for="variant in variants" :key="variant.variantId" class="color-box"
+                    :style="{backgroundColor:variant.variantColor}" @mouseover="updateProduct(variant.image)">
                 </div>
                 <ul>
                     <li v-for="detail of details">{{detail.name}}</li>
                 </ul>
+
+                <!-- for on event, we can use  @ for example @click or @mouseover-->
+                <button @click="addToCart()" v-bind:disabled="!inStock" :class="{disabledButton:!inStock}">Add to Cart</button>
+                <div class="cart">
+                    <p>Cart({{cart}})</p>
+                </div>
             </div>
         </div>
     </div>
