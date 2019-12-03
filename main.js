@@ -30,15 +30,14 @@ const productComponent = Vue.component('product', {
         <div v-for="(variant,index) in variants" :key="variant.variantId" class="color-box"
             :style="{backgroundColor:variant.variantColor}" @mouseover="updateProduct(index)">
         </div>
+
+        <!-- for on event, we can use  @ for example @click or @mouseover-->
+        <button @click="addToCart()" v-bind:disabled="!inStock" 
+        :class="{disabledButton:!inStock}">Add to Cart</button>
         <ul>
             <li v-for="detail of details">{{detail.name}}</li>
         </ul>
 
-        <!-- for on event, we can use  @ for example @click or @mouseover-->
-        <button @click="addToCart()" v-bind:disabled="!inStock" :class="{disabledButton:!inStock}">Add to Cart</button>
-        <div class="cart">
-            <p>Cart({{cart}})</p>
-        </div>
     </div>
 </div>`,
     data() {
@@ -67,12 +66,11 @@ const productComponent = Vue.component('product', {
                     "quanlity": 5
                 },
             ],
-            cart: 0
         }
     },
     methods: {
         addToCart() {
-            this.cart += 1;
+            this.$emit('add-to-cart', this.variants[this.selectedVariant].variantId);
             this.variants[this.selectedVariant].quanlity -= 1;
         },
         updateProduct(index) {
@@ -107,8 +105,18 @@ const app = new Vue({
         product: productComponent
     },
     data: {
-        prenium: true
-    }
-
+        prenium: true,
+        cart: []
+    },
+    methods: {
+        updateCart(productId) {
+            this.cart.push(productId);
+        }
+    },
+    computed: {
+        cartLength() {
+            return this.cart.length;
+        }
+    },
 });
 

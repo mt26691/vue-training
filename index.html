@@ -7,7 +7,11 @@
 <body>
     <div class="nav-bar"></div>
     <div id="app">
-       <product message="test" :prenium="prenium"></product>
+        <div class="cart">
+            <p>Cart({{cartLength}})</p>
+        </div>
+        <product message="test" :prenium="prenium" @add-to-cart="updateCart"></product>
+
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="main.js">
