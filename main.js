@@ -19,18 +19,37 @@ const productReview = Vue.component('product-review', {
                 <option>1</option>
             </select>
         </p>
+        <ul v-show="errors.length>0">
+            <li v-for="error in errors">{{error}}</li>
+        </ul>
         <input type="submit" value="Submit"/>
     </form>`,
     data() {
         return {
             name: null,
             review: null,
-            rating: null
+            rating: null,
+            errors: []
         }
     },
     computed: {},
     methods: {
         onSubmit(event) {
+            this.errors = [];
+            if (!this.name) {
+                this.errors.push("Name is required");
+            }
+            if (!this.review) {
+                this.errors.push("review is required");
+            }
+            if (!this.rating) {
+                this.errors.push("rating is required");
+            }
+
+            if (this.errors.length > 0) {
+                return;
+            }
+
             const productReview = {
                 name: this.name,
                 review: this.review,
@@ -40,7 +59,7 @@ const productReview = Vue.component('product-review', {
             this.name = null;
             this.review = null;
             this.rating = null;
-            
+
             //emit something here
         }
     }
@@ -129,7 +148,7 @@ const productComponent = Vue.component('product', {
                     "quanlity": 5
                 },
             ],
-            reviews:[]
+            reviews: []
         }
     },
     methods: {
@@ -140,7 +159,7 @@ const productComponent = Vue.component('product', {
         updateProduct(index) {
             this.selectedVariant = index;
         },
-        addReview(reviewData){
+        addReview(reviewData) {
             this.reviews.push(reviewData);
         }
     },
