@@ -14,7 +14,18 @@
             </div>
             <div class="product-info">
                 <h1>
-                    <a v-bind:href="voz">{{product}}</a></h1>
+                    <a v-bind:href="voz">{{product}}</a>
+                </h1>
+                <p v-if="inventory>10">In stock</p>
+                <p v-else-if="inventory <=10 && inventory >0">Near out of stock</p>
+                <p v-else>Out of stock</p>
+
+                <div v-for="variant in variants">
+                    <p>{{variant.variantColor}}</p>
+                </div>
+                <ul>
+                    <li v-for="detail of details">{{detail.name}}</li>
+                </ul>
             </div>
         </div>
     </div>
