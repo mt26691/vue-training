@@ -1,17 +1,26 @@
 <html>
 
 <head>
-
+    <link rel="stylesheet" type="text/css" href="product_style.css" />
 </head>
 
 <body>
+    <div class="nav-bar"></div>
     <div id="app">
-        <h1> {{product}}</h1>
-        <h1> {{product}}</h1>
+        <div class="product">
+            <div class="product-image">
+                <!-- v-bind dynamically binds an attribute to an expression -->
+                <img v-bind:src="image" />
+            </div>
+            <div class="product-info">
+                <h1>
+                    <a v-bind:href="voz">{{product}}</a></h1>
+            </div>
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="main.js">
-      
+
     </script>
 </body>
 
