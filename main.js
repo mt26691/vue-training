@@ -1,11 +1,11 @@
 const app = new Vue({
     el: '#app',
     data: {
+        brand: 'Manh Tung',
         product: 'first product1',
         description: 'A pair of warm, fuzzy socks',
-        image: './assets/vmSocks-green-onWhite.jpg',
+        selectedVariant: 0,
         voz: 'https://forums.voz.vn/',
-        inventory: 10,
         details: [
             { name: "80% cotton" },
             { name: "20% polyester" },
@@ -16,24 +16,40 @@ const app = new Vue({
                 "variantId": 2234,
                 "variantColor": "green",
                 "image": "./assets/vmSocks-green-onWhite.jpg",
-                "inStock": true
+                "quanlity":5
             },
             {
                 "variantId": 2235,
                 "variantColor": "blue",
                 "image": "./assets/vmSocks-blue-onWhite.jpg",
-                "inStock": false
+                "quanlity":5
             },
         ],
-        "inStock": false,
         cart: 0
     },
     methods: {
         addToCart() {
             this.cart += 1;
+            this.variants[this.selectedVariant].quanlity -=1;
         },
-        updateProduct(image) {
-            this.image = image;
+        updateProduct(index) {
+           this.selectedVariant = index;
         }
-    }
+    },
+    computed: {
+        title() {
+            return `${this.brand} ${this.product}`;
+        },
+        image(){
+           
+            return this.variants[this.selectedVariant].image;
+        },
+        inStock(){
+            return this.variants[this.selectedVariant].quanlity >0;
+        },
+        inventory(){
+            return this.variants[this.selectedVariant].quanlity;
+        }
+    },
+   
 });
