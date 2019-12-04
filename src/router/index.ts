@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
+import VueRouter, { RouteConfig } from 'vue-router'
 import EventList from '../views/EventList.vue'
 import EventCreate from '../views/EventCreate.vue'
 import EventShow from '../views/EventShow.vue'
@@ -7,16 +7,17 @@ import User from '../views/User.vue'
 
 Vue.use(VueRouter)
 
-const routes = [
+const routes: Array<RouteConfig> = [
   {
     path: '/',
     name: 'event-list',
     component: EventList
   },
   {
-    path: '/event',
+    path: '/event/:id',
     name: 'event-show',
-    component: EventShow
+    component: EventShow,
+    props: true
   },
   {
     path: '/event/create',
@@ -42,6 +43,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
+  // support from IE 10 only
   mode: 'history',
   base: process.env.BASE_URL,
   routes
