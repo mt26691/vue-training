@@ -1,15 +1,19 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link :to="{ name: 'event-list' }">List</router-link> |
-      <router-link :to="{ name: 'event-create' }">Create</router-link>
-      <router-link :to="{ name: 'user', params: { username: 'mt26691' } }"
-        >MT26691</router-link
-      >
-    </div>
+    <div id="nav"></div>
+    <NavBar />
     <router-view />
   </div>
 </template>
+
+<script lang="ts">
+import NavBar from '@/components/Navbar.vue'
+export default {
+  components: {
+    NavBar
+  }
+}
+</script>
 
 <style>
 #app {
