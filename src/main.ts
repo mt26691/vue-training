@@ -4,6 +4,8 @@ import router from './router'
 import store from './store'
 import upperFirst from 'lodash/upperFirst'
 import camelCase from 'lodash/camelCase'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 
 const requireComponent = require.context(
   // The relative path of the components folder
@@ -39,6 +41,7 @@ requireComponent.keys().forEach(fileName => {
 })
 
 Vue.config.productionTip = false
+Vue.use(VueAxios, axios)
 
 new Vue({
   router,
