@@ -3,6 +3,8 @@
     <svg class="icon" :width="width" :height="height">
       <use v-bind="{ 'xlink:href': `/feather-sprite.svg#${name}` }" />
     </svg>
+    <!-- slot can have name, so in the element that use the BaseIcon we can use like this <h2 slot="test">abc xyz</h2> -->
+    <!-- <slot name="test"></slot> -->
     <slot></slot>
   </div>
 </template>
