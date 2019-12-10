@@ -12,7 +12,9 @@
     <p>{{ event.description }}</p>
     <h2>
       Attendees
-        <span class="badge -fill-gradient">{{ event.attendees ? event.attendees.length : 0 }}</span>
+      <span class="badge -fill-gradient">{{
+        event.attendees ? event.attendees.length : 0
+      }}</span>
     </h2>
     <ul class="list-group">
       <li
@@ -28,8 +30,10 @@
 
 <script lang="ts">
 import EventService from '@/services/EventService'
+import Vue from 'vue'
 
-export default {
+export default Vue.extend({
+  name: 'EventShow',
   props: {
     id: {}
   },
@@ -47,7 +51,7 @@ export default {
         console.log('There was an error:', error.response)
       })
   }
-}
+})
 </script>
 
 <style scoped>

@@ -9,8 +9,10 @@
 // @ is an alias to /src
 import EventCard from '@/components/EventCard.vue'
 import EventService from '@/services/EventService'
+import Vue from 'vue'
 
-export default {
+export default Vue.extend({
+  name: 'EventList',
   components: {
     EventCard
   },
@@ -28,7 +30,7 @@ export default {
         console.log('There was an error:', error.response)
       })
   }
-}
+})
 </script>
 
 <style scoped></style>
