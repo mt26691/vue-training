@@ -33,7 +33,8 @@ export const actions = {
       commit('INCREMENT_COUNT', value)
     }
   },
-  createEvent({ commit }, event) {
+  // we can have rootState
+  createEvent({ commit, dispatch, rootState }, event) {
     return EventService.postEvent(event).then(() => {
       commit('ADD_EVENT', event)
     })
