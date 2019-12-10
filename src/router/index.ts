@@ -14,15 +14,15 @@ const routes: Array<RouteConfig> = [
     component: EventList
   },
   {
+    path: '/event/create',
+    name: 'event-create',
+    component: EventCreate
+  },
+  {
     path: '/event/:id',
     name: 'event-show',
     component: EventShow,
     props: true
-  },
-  {
-    path: '/event/create',
-    name: 'event-create',
-    component: EventCreate
   },
   {
     path: '/user/:username',
