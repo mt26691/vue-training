@@ -6,6 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     user: { id: 'mt26691', name: 'Manh Tung' },
+    count: 0,
     categories: [
       'sustainability',
       'nature',
@@ -28,8 +29,22 @@ export default new Vuex.Store({
       { id: 4, text: '...', done: false }
     ]
   },
-  mutations: {},
-  actions: {},
+  // mutations are sync
+  mutations: {
+    INCREMENT_COUNT(state, value) {
+      state.count += value
+    }
+  },
+  // actions are async
+  // always put mutations within actions
+  actions: {
+    updateCount({ state, commit }, value) {
+      // we can call async here
+      if (state.user) {
+        commit('INCREMENT_COUNT', value)
+      }
+    }
+  },
   modules: {},
   getters: {
     catLength: state => {
