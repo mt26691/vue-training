@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Create an event, {{ user.name }}</h1>
-    <form>
+    <form @submit.prevent="createEvent">
       <label>Select a category</label>
       <select v-model="event.category">
         <option v-for="cat in categories" :key="cat">{{ cat }}</option>
@@ -35,7 +35,7 @@
       <h3>When is your event?</h3>
       <div class="field">
         <label>Date</label>
-        <datepicker v-model="event.date" placeholder="Select a date" />
+        <DatePicker v-model="event.date" placeholder="Select a date" />
       </div>
       <div class="field">
         <label>Select a time</label>
@@ -52,11 +52,12 @@
 // @ is an alias to /src
 import Vue from 'vue'
 import { mapState, mapGetters } from 'vuex'
+// @ts-ignore
 import DatePicker from 'vuejs-datepicker'
 
 export default Vue.extend({
   name: 'EventCreate',
-  components: {},
+  components: { DatePicker },
   data() {
     const times = []
     for (let i = 1; i <= 24; i++) {
@@ -78,6 +79,16 @@ export default Vue.extend({
     }
   },
   methods: {
+    createEvent() {
+      this.$store.dispatch('createEvent', this.$data.event).then(() => {
+        // redirect
+        this.$router.push({
+          name: 'event-show',
+          params: { id: this.$data.event.id }
+        })
+        this.$data.event = (this as any).createFreshEventObject()
+      })
+    },
     createFreshEventObject() {
       const user = this.$store.state.user
       const id = Math.floor(Math.random() * 10000000)
