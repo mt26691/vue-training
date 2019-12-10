@@ -70,13 +70,18 @@ export default new Vuex.Store({
         })
     },
     fetchEvent({ commit }, id) {
-      EventService.getEvent(id) // <--- Send the prop id to our EventService
-        .then(response => {
-          commit('SET_EVENT', response.data)
-        })
-        .catch(error => {
-          console.log('There was an error:', error.response)
-        })
+      const event = this.getters.getEventById(id)
+      if (event) {
+        commit('SET_EVENT', event)
+      } else {
+        EventService.getEvent(id) // <--- Send the prop id to our EventService
+          .then(response => {
+            commit('SET_EVENT', response.data)
+          })
+          .catch(error => {
+            console.log('There was an error:', error.response)
+          })
+      }
     }
   },
   modules: {},
