@@ -41,7 +41,11 @@ export default Vue.extend({
     this.$store.dispatch('fetchEvent', this.id)
   },
   computed: {
-    ...mapState(['event'])
+    ...mapState({
+      event: state => {
+        return (state as any).event.event
+      }
+    })
   }
 })
 </script>

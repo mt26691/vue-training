@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h1>Event Listing</h1>
-    <EventCard v-for="event in events" :key="event.id" :event="event" />
+    <h1>Event for {{ user.user.name }}</h1>
+    <EventCard v-for="event in event.events" :key="event.id" :event="event" />
 
     <router-link
       :to="{ name: 'event-list', query: { page: page - 1 } }"
@@ -11,7 +11,9 @@
     >
     |
 
-    <router-link v-if="nextPageAvailable" :to="{ name: 'event-list', query: { page: page + 1 } }"
+    <router-link
+      v-if="nextPageAvailable"
+      :to="{ name: 'event-list', query: { page: page + 1 } }"
       >Next Page</router-link
     >
   </div>
@@ -28,23 +30,18 @@ export default Vue.extend({
   components: {
     EventCard
   },
-  data() {
-    return {
-      event: {} as any
-    }
-  },
   created() {
     this.$store.dispatch('fetchEvents', { perPage: 2, page: this.page })
   },
   computed: {
-    ...mapState(['events']),
+    ...mapState(['event', 'user']),
     page(): number {
       return parseInt(
         this.$route.query.page ? this.$route.query.page.toString() : '1'
       )
     },
     nextPageAvailable() {
-      return this.$store.state.totalEvent > (this.page as number * 2)
+      return this.event.totalEvent > (this.page as number) * 2
     }
   }
 })
