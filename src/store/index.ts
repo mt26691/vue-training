@@ -24,7 +24,8 @@ export default new Vuex.Store({
       { id: 4, text: '...', done: false }
     ],
     events: [],
-    totalEvent: 0
+    totalEvent: 0,
+    event: {}
   },
   // mutations are sync
   mutations: {
@@ -39,6 +40,9 @@ export default new Vuex.Store({
     },
     SET_TOTAL_EVENT(state, total) {
       state.totalEvent = total
+    },
+    SET_EVENT(state, event) {
+      state.event = event
     }
   },
   // actions are async
@@ -60,6 +64,15 @@ export default new Vuex.Store({
         .then(response => {
           commit('SET_TOTAL_EVENT', parseInt(response.headers['x-total-count']))
           commit('SET_EVENTS', response.data)
+        })
+        .catch(error => {
+          console.log('There was an error:', error.response)
+        })
+    },
+    fetchEvent({ commit }, id) {
+      EventService.getEvent(id) // <--- Send the prop id to our EventService
+        .then(response => {
+          commit('SET_EVENT', response.data)
         })
         .catch(error => {
           console.log('There was an error:', error.response)
