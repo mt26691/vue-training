@@ -11,7 +11,7 @@
     >
     |
 
-    <router-link :to="{ name: 'event-list', query: { page: page + 1 } }"
+    <router-link v-if="nextPageAvailable" :to="{ name: 'event-list', query: { page: page + 1 } }"
       >Next Page</router-link
     >
   </div>
@@ -38,10 +38,13 @@ export default Vue.extend({
   },
   computed: {
     ...mapState(['events']),
-    page() {
+    page(): number {
       return parseInt(
         this.$route.query.page ? this.$route.query.page.toString() : '1'
       )
+    },
+    nextPageAvailable() {
+      return this.$store.state.totalEvent > (this.page as number * 2)
     }
   }
 })

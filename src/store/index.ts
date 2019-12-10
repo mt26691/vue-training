@@ -23,7 +23,8 @@ export default new Vuex.Store({
       { id: 3, text: '...', done: true },
       { id: 4, text: '...', done: false }
     ],
-    events: []
+    events: [],
+    totalEvent: 0
   },
   // mutations are sync
   mutations: {
@@ -35,6 +36,9 @@ export default new Vuex.Store({
     },
     SET_EVENTS(state, events) {
       state.events = events
+    },
+    SET_TOTAL_EVENT(state, total) {
+      state.totalEvent = total
     }
   },
   // actions are async
@@ -54,6 +58,7 @@ export default new Vuex.Store({
     fetchEvents({ commit }, { perPage, page }) {
       return EventService.getEvents(perPage, page)
         .then(response => {
+          commit('SET_TOTAL_EVENT', parseInt(response.headers['x-total-count']))
           commit('SET_EVENTS', response.data)
         })
         .catch(error => {
