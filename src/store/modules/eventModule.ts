@@ -36,6 +36,7 @@ export const mutations: MutationTree<any> = {
 export const actions: ActionTree<IEventState, any> = {
   // we can have rootState
   createEvent({ commit, dispatch, rootState }, event) {
+    // root : true look for this action at the root of our store
     // dispatch('moduleName/actionTocall', payload, {root:true})
     return EventService.postEvent(event).then(() => {
       commit('ADD_EVENT', event)
