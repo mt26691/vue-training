@@ -31,7 +31,7 @@ export default Vue.extend({
     EventCard
   },
   created() {
-    this.$store.dispatch('fetchEvents', { perPage: 2, page: this.page })
+    this.$store.dispatch('event/fetchEvents', { perPage: 2, page: this.page })
   },
   computed: {
     ...mapState(['event', 'user']),

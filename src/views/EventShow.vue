@@ -30,7 +30,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default Vue.extend({
   name: 'EventShow',
@@ -38,7 +38,7 @@ export default Vue.extend({
     id: {}
   },
   created() {
-    this.$store.dispatch('fetchEvent', this.id)
+    this.fetchEvent(this.id)
   },
   computed: {
     ...mapState({
@@ -46,6 +46,9 @@ export default Vue.extend({
         return (state as any).event.event
       }
     })
+  },
+  methods: {
+    ...mapActions('event', ['fetchEvent'])
   }
 })
 </script>

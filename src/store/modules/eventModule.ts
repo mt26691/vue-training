@@ -36,6 +36,7 @@ export const mutations: MutationTree<any> = {
 export const actions: ActionTree<IEventState, any> = {
   // we can have rootState
   createEvent({ commit, dispatch, rootState }, event) {
+    // dispatch('moduleName/actionTocall', payload, {root:true})
     return EventService.postEvent(event).then(() => {
       commit('ADD_EVENT', event)
     })
@@ -51,7 +52,8 @@ export const actions: ActionTree<IEventState, any> = {
       })
   },
   fetchEvent({ commit }, id) {
-    const event = this.getters.getEventById(id)
+    console.log(this.getters)
+    const event = this.getters['event/getEventById'](id)
     if (event) {
       commit('SET_EVENT', event)
     } else {
@@ -72,7 +74,7 @@ export const getters: GetterTree<IEventState, any> = {
   }
 }
 
-const namespaced: boolean = false
+const namespaced: boolean = true
 
 export const event: Module<IEventState, any> = {
   namespaced,

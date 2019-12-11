@@ -80,7 +80,7 @@ export default Vue.extend({
   },
   methods: {
     createEvent() {
-      this.$store.dispatch('createEvent', this.$data.event).then(() => {
+      this.$store.dispatch('event/createEvent', this.$data.event).then(() => {
         // redirect
         this.$router.push({
           name: 'event-show',
