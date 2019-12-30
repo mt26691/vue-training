@@ -45,6 +45,7 @@ export const actions: ActionTree<IEventState, any> = {
   fetchEvents({ commit }, { perPage, page }) {
     return EventService.getEvents(perPage, page)
       .then(response => {
+        // mutation should be called inside the current module
         commit('SET_TOTAL_EVENT', parseInt(response.headers['x-total-count']))
         commit('SET_EVENTS', response.data)
       })
