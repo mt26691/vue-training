@@ -31,14 +31,23 @@
 <script lang="ts">
 import Vue from 'vue'
 import { mapState, mapActions } from 'vuex'
+import nProgress from 'nprogress'
+import store from '@/store/index'
 
 export default Vue.extend({
   name: 'EventShow',
+  beforeRouteEnter(routeTo, from, next) {
+    // nProgress.start()
+    store.dispatch('event/fetchEvent', routeTo.params.id).then(() => {
+      // nProgress.done()
+      next()
+    })
+  },
   props: {
     id: {}
   },
   created() {
-    this.fetchEvent(this.id)
+    // this.fetchEvent(this.id)
   },
   computed: {
     ...mapState({

@@ -5,12 +5,14 @@ export interface IEventState {
   events: Array<any>
   totalEvent: number
   event: any
+  perPage: number
 }
 
 export const state: IEventState = {
   events: [] as Array<any>,
   totalEvent: 0,
-  event: {}
+  event: {},
+  perPage: 3
 }
 
 // mutations are sync
@@ -78,7 +80,7 @@ export const actions: ActionTree<IEventState, any> = {
     if (event) {
       commit('SET_EVENT', event)
     } else {
-      EventService.getEvent(id) // <--- Send the prop id to our EventService
+      return EventService.getEvent(id) // <--- Send the prop id to our EventService
         .then(response => {
           commit('SET_EVENT', response.data)
         })
