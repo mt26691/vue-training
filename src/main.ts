@@ -6,6 +6,7 @@ import upperFirst from 'lodash/upperFirst'
 import camelCase from 'lodash/camelCase'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import 'nprogress/nprogress.css'
 
 const requireComponent = require.context(
   // The relative path of the components folder
