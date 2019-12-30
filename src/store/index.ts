@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import * as user from '@/store/modules/user'
 import { event } from '@/store/modules/eventModule'
+import { notification } from '@/store/modules/notificationModule'
 
 Vue.use(Vuex)
 
@@ -19,5 +20,5 @@ export default new Vuex.Store({
       'community'
     ]
   },
-  modules: { user, event }
+  modules: { user, event, notification }
 })

@@ -38,11 +38,25 @@ export const actions: ActionTree<IEventState, any> = {
   createEvent({ commit, dispatch, rootState }, event) {
     // root : true look for this action at the root of our store
     // dispatch('moduleName/actionTocall', payload, {root:true})
-    return EventService.postEvent(event).then(() => {
-      commit('ADD_EVENT', event)
-    })
+    return EventService.postEvent(event)
+      .then(() => {
+        commit('ADD_EVENT', event)
+        const notification = {
+          type: 'sucess',
+          message: `your event has been created!`
+        }
+        dispatch('notification/add', notification, { root: true })
+      })
+      .catch(error => {
+        const notification = {
+          type: 'error',
+          message: `there was a problem creating event ${error.message}`
+        }
+        dispatch('notification/add', notification, { root: true })
+        throw error
+      })
   },
-  fetchEvents({ commit }, { perPage, page }) {
+  fetchEvents({ commit, dispatch }, { perPage, page }) {
     return EventService.getEvents(perPage, page)
       .then(response => {
         // mutation should be called inside the current module
@@ -51,9 +65,14 @@ export const actions: ActionTree<IEventState, any> = {
       })
       .catch(error => {
         console.log('There was an error:', error.response)
+        const notification = {
+          type: 'error',
+          message: `there was a problem fetching events ${error.message}`
+        }
+        dispatch('notification/add', notification, { root: true })
       })
   },
-  fetchEvent({ commit }, id) {
+  fetchEvent({ commit, dispatch }, id) {
     console.log(this.getters)
     const event = this.getters['event/getEventById'](id)
     if (event) {
@@ -65,6 +84,11 @@ export const actions: ActionTree<IEventState, any> = {
         })
         .catch(error => {
           console.log('There was an error:', error.response)
+          const notification = {
+            type: 'error',
+            message: `there was a problem fetching event ${error.message}`
+          }
+          dispatch('notification/add', notification, { root: true })
         })
     }
   }
