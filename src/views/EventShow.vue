@@ -44,8 +44,13 @@ export default Vue.extend({
         // nProgress.done()
         next()
       })
-      .catch(() => {
-        next({ name: '404', params: { resource: 'event' } })
+      .catch(err => {
+        console.log(err)
+        if (err.response && err.response.status === 404) {
+          next({ name: '404', params: { resource: 'event' } })
+        } else {
+          next({ name: 'network-issue', params: { resource: 'event' } })
+        }
       })
   },
   props: {
