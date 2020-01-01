@@ -75,7 +75,6 @@ export const actions: ActionTree<IEventState, any> = {
       })
   },
   fetchEvent({ commit, dispatch }, id) {
-    console.log(this.getters)
     const event = this.getters['event/getEventById'](id)
     if (event) {
       commit('SET_EVENT', event)
@@ -91,6 +90,7 @@ export const actions: ActionTree<IEventState, any> = {
             message: `there was a problem fetching event ${error.message}`
           }
           dispatch('notification/add', notification, { root: true })
+          throw error
         })
     }
   }

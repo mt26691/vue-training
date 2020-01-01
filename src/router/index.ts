@@ -26,9 +26,14 @@ const routes: Array<RouteConfig> = [
     component: EventShow,
     props: true,
     beforeEnter(to, from, next) {
-      store.dispatch('event/fetchEvent', to.params.id).then(() => {
-        next()
-      })
+      store
+        .dispatch('event/fetchEvent', to.params.id)
+        .then(() => {
+          next()
+        })
+        .catch(() => {
+          next({ name: '404', params: { resource: 'event' } })
+        })
     }
   },
   {
@@ -40,7 +45,8 @@ const routes: Array<RouteConfig> = [
   {
     path: '/404',
     name: '404',
-    component: NotFound
+    component: NotFound,
+    props: true
   },
   {
     path: '*',

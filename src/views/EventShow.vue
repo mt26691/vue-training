@@ -38,10 +38,15 @@ export default Vue.extend({
   name: 'EventShow',
   beforeRouteEnter(routeTo, from, next) {
     // nProgress.start()
-    store.dispatch('event/fetchEvent', routeTo.params.id).then(() => {
-      // nProgress.done()
-      next()
-    })
+    store
+      .dispatch('event/fetchEvent', routeTo.params.id)
+      .then(() => {
+        // nProgress.done()
+        next()
+      })
+      .catch(() => {
+        next({ name: '404', params: { resource: 'event' } })
+      })
   },
   props: {
     id: {}

@@ -40,6 +40,7 @@ export const actions = {
     })
   },
   fetchEvents({ commit }, { perPage, page }) {
+    console.log('fetchEvent------22------')
     return EventService.getEvents(perPage, page)
       .then(response => {
         commit('SET_TOTAL_EVENT', parseInt(response.headers['x-total-count']))
@@ -50,6 +51,7 @@ export const actions = {
       })
   },
   fetchEvent({ commit }, id) {
+    console.log('fetchEvent------------zzzzzzzzzzzzzzzzz')
     const event = this.getters.getEventById(id)
     if (event) {
       commit('SET_EVENT', event)
@@ -57,9 +59,6 @@ export const actions = {
       EventService.getEvent(id) // <--- Send the prop id to our EventService
         .then(response => {
           commit('SET_EVENT', response.data)
-        })
-        .catch(error => {
-          console.log('There was an error:', error.response)
         })
     }
   }
