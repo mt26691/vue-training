@@ -6,7 +6,7 @@ import EventShow from '../views/EventShow.vue'
 import User from '../views/User.vue'
 import nProgress from 'nprogress'
 import store from '@/store/index'
-
+import NotFound from '../views/NotFound.vue'
 Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
@@ -36,6 +36,15 @@ const routes: Array<RouteConfig> = [
     name: 'user',
     component: User,
     props: true
+  },
+  {
+    path: '/404',
+    name: '404',
+    component: NotFound
+  },
+  {
+    path: '*',
+    redirect: { name: '404' }
   }
   // {
   //   path: '/about-us',
