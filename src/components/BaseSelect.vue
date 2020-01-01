@@ -7,6 +7,7 @@
   </div>
 </template>
 
+// if we have complex senario, please use vue mutil select
 <script lang="ts">
 // @ is an alias to /src
 import Vue from 'vue'
